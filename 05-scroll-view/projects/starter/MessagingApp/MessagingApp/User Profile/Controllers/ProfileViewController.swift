@@ -32,12 +32,13 @@ final class ProfileViewController: UIViewController {
   // MARK: - Properties
   private let profileHeaderView = ProfileHeaderView()
   private let mainStackView = UIStackView()
+  private let scrollView = UIScrollView()
   
   // MARK: - Life Cycles
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
-    
+    self.setupScrollView()
     setupMainStackView()
   }
   
@@ -58,9 +59,9 @@ final class ProfileViewController: UIViewController {
     self.mainStackView.distribution = .equalSpacing
     self.mainStackView.translatesAutoresizingMaskIntoConstraints = false
 
-    self.view.addSubview(mainStackView)
+    self.scrollView.addSubview(mainStackView)
 
-    let contentLayoutGuide = view.safeAreaLayoutGuide
+    let contentLayoutGuide = scrollView.contentLayoutGuide
 
     NSLayoutConstraint.activate([
       mainStackView.leadingAnchor.constraint(equalTo:
@@ -69,10 +70,26 @@ final class ProfileViewController: UIViewController {
                                                 contentLayoutGuide.trailingAnchor),
       mainStackView.topAnchor.constraint(equalTo:
                                           contentLayoutGuide.topAnchor),
+      mainStackView.bottomAnchor.constraint(equalTo:
+                                          contentLayoutGuide.bottomAnchor),
+      mainStackView.widthAnchor.constraint(equalTo: self.view.widthAnchor)
     ])
 
     setupProfileHeaderView()
     setupButtons()
+  }
+
+  private func setupScrollView() {
+    self.scrollView.translatesAutoresizingMaskIntoConstraints = false
+    self.view.addSubview(self.scrollView)
+
+    let contentLayoutGuide = self.scrollView.frameLayoutGuide
+    NSLayoutConstraint.activate([
+      contentLayoutGuide.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+      contentLayoutGuide.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+      contentLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+      contentLayoutGuide.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+    ])
   }
 }
 
