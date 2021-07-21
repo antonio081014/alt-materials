@@ -38,21 +38,41 @@ final class ProfileViewController: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = .white
     
-    setupProfileHeaderView()
+    setupMainStackView()
   }
   
   // MARK: - Layouts
   private func setupProfileHeaderView() {
     view.addSubview(profileHeaderView)
     profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
-    profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-    profileHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-    profileHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-    profileHeaderView.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+    profileHeaderView.heightAnchor.constraint(equalToConstant: 360).isActive = true
+    mainStackView.addArrangedSubview(profileHeaderView)
   }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
+  }
+
+  private func setupMainStackView() {
+    self.mainStackView.axis = .vertical
+    self.mainStackView.distribution = .equalSpacing
+    self.mainStackView.translatesAutoresizingMaskIntoConstraints = false
+
+    self.view.addSubview(mainStackView)
+
+    let contentLayoutGuide = view.safeAreaLayoutGuide
+
+    NSLayoutConstraint.activate([
+      mainStackView.leadingAnchor.constraint(equalTo:
+                                              contentLayoutGuide.leadingAnchor),
+      mainStackView.trailingAnchor.constraint(equalTo:
+                                                contentLayoutGuide.trailingAnchor),
+      mainStackView.topAnchor.constraint(equalTo:
+                                          contentLayoutGuide.topAnchor),
+    ])
+
+    setupProfileHeaderView()
+    setupButtons()
   }
 }
 
