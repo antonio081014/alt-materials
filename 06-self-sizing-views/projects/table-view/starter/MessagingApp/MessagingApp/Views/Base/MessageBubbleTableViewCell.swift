@@ -39,7 +39,7 @@ class MessageBubbleTableViewCell: UITableViewCell {
   
   lazy var messageLabel: UILabel = {
     let messageLabel = UILabel(frame: .zero)
-    messageLabel.textColor = .black
+    messageLabel.textColor = .white
     messageLabel.font = UIFont.systemFont(ofSize: 13)
     messageLabel.numberOfLines = 0
     messageLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -67,28 +67,9 @@ class MessageBubbleTableViewCell: UITableViewCell {
   }
   
   func configureLayout() {
-
+    contentView.addSubview(self.bubbleImageView)
     contentView.addSubview(messageLabel)
-    
-    NSLayoutConstraint.activate([
-      //1
-      messageLabel.topAnchor.constraint(
-        equalTo: contentView.topAnchor,
-        constant: 10),
-      
-      messageLabel.rightAnchor.constraint(
-        equalTo: contentView.rightAnchor,
-        constant: -10),
-      
-      messageLabel.bottomAnchor.constraint(
-        equalTo: contentView.bottomAnchor,
-        constant: -10),
-      
-      messageLabel.leftAnchor.constraint(
-        equalTo: contentView.leftAnchor,
-        constant: 10)
-    ])
-     
+
   }
   
   required init?(coder aDecoder: NSCoder) {
