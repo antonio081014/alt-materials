@@ -53,6 +53,8 @@ final class UserStoryViewController: UIViewController {
       StoryEventCollectionViewCell.self,
       forCellWithReuseIdentifier: cellIdentifier)
     collectionView.dataSource = self
+    collectionView.delegate = self
+    collectionView.register(HeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerViewIdentifier)
     return collectionView
   }()
   
@@ -123,11 +125,88 @@ extension UserStoryViewController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? StoryEventCollectionViewCell
-      else { fatalError("Dequeued unregistered cell") }
+    else { fatalError("Dequeued unregistered cell") }
     let item = indexPath.item
     let storyEvent = userStory.events[item]
     cell.configureCell(storyEvent: storyEvent)
     cell.backgroundColor = item % 2 == 0 ? .lightGray : .darkGray
     return cell
+  }
+
+  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    guard let headerView = self.collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerViewIdentifier, for: indexPath) as? HeaderCollectionReusableView else {
+      fatalError("Dequeued unregistered reusable view")
+    }
+    headerView.configureCell(username: self.userStory.username)
+    return headerView
+  }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+extension UserStoryViewController:
+  UICollectionViewDelegateFlowLayout {
+  // 1
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    sizeForItemAt indexPath: IndexPath
+  ) -> CGSize {
+    return collectionView.frame.size
+  }
+  // 2
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    insetForSectionAt section: Int
+  ) -> UIEdgeInsets {
+    return .zero
+  }
+  // 3
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    minimumLineSpacingForSectionAt section: Int
+  ) -> CGFloat {
+    return 0
+  }
+
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    return self.collectionView.frame.size
+  }
+}
+
+extension UserStoryViewController {
+  // 1
+  func scrollViewWillEndDragging(
+    _ scrollView: UIScrollView,
+    withVelocity velocity: CGPoint,
+    targetContentOffset: UnsafeMutablePointer<CGPoint>
+  ) {
+    let contentOffsetX = targetContentOffset.pointee.x
+    let scrollViewWidth = scrollView.frame.width
+    currentItemIndex = Int(contentOffsetX / scrollViewWidth)
+  }
+
+  private func centerCollectionViewContent() {
+    DispatchQueue.main.async { [weak self] in
+      guard let self = self else { return }
+      // 1
+      let x = self.collectionView.frame.width
+        * CGFloat(self.currentItemIndex)
+      let y: CGFloat = 0
+      let contentOffset = CGPoint(x: x, y: y)
+
+      // 2
+      self.collectionView.setContentOffset(
+        contentOffset,animated: false)
+    }
+  }
+
+  override func viewWillTransition(
+    to size: CGSize,
+    with coordinator: UIViewControllerTransitionCoordinator
+  ) {
+    super.viewWillTransition(to: size, with: coordinator)
+    centerCollectionViewContent()
   }
 }

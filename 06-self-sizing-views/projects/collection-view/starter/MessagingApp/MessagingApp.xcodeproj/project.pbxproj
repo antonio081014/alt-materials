@@ -30,6 +30,7 @@
 		FDBEB4662289DF50002125F5 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBEB4652289DF50002125F5 /* TabBarController.swift */; };
 		FDBEB46E2289E148002125F5 /* TabBarTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBEB46D2289E148002125F5 /* TabBarTitle.swift */; };
 		FDD9F25222ACF35C00DE7779 /* HeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD9F25122ACF35C00DE7779 /* HeaderCollectionReusableView.swift */; };
+		FFDC483426AA119000FC9FBC /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDC483326AA119000FC9FBC /* UIView+Constraints.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		FDBEB4652289DF50002125F5 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		FDBEB46D2289E148002125F5 /* TabBarTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarTitle.swift; sourceTree = "<group>"; };
 		FDD9F25122ACF35C00DE7779 /* HeaderCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		FFDC483326AA119000FC9FBC /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +162,7 @@
 		FD9E31E722A9FAAF0092F6C6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				FFDC483326AA119000FC9FBC /* UIView+Constraints.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				EEDDD23B2239E92D004ED45C /* ContactListTableViewController.swift in Sources */,
 				FD37A8302234D0C000387AB6 /* ProfileImageView.swift in Sources */,
 				FDBEB4662289DF50002125F5 /* TabBarController.swift in Sources */,
+				FFDC483426AA119000FC9FBC /* UIView+Constraints.swift in Sources */,
 				FD37A82D2234D0C000387AB6 /* ProfileViewController.swift in Sources */,
 				FDD9F25222ACF35C00DE7779 /* HeaderCollectionReusableView.swift in Sources */,
 				FD37A8322234D82500387AB6 /* ProfileHeaderView.swift in Sources */,

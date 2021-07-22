@@ -37,7 +37,39 @@ final class MiniStoryView: UIView {
   private let userStories: [UserStory]
   private let cellIdentifier = "cellIdentifier"
   weak var delegate: MiniStoryViewDelegate?
-  
+
+
+  // 1
+  private let verticalInset: CGFloat = 8
+  private let horizontalInset: CGFloat = 16
+  // 2
+  private lazy var flowLayout: UICollectionViewFlowLayout = {
+    let flowLayout = UICollectionViewFlowLayout()
+    flowLayout.minimumLineSpacing = 16
+    flowLayout.scrollDirection = .horizontal
+    flowLayout.sectionInset = UIEdgeInsets(
+      top: verticalInset,
+      left: horizontalInset,
+      bottom: verticalInset,
+      right: horizontalInset)
+    return flowLayout
+  }()
+  // 3
+  private lazy var collectionView: UICollectionView = {
+    let collectionView = UICollectionView(
+      frame: .zero,
+      collectionViewLayout: flowLayout)
+    collectionView.register(
+      MiniStoryCollectionViewCell.self,
+      forCellWithReuseIdentifier: cellIdentifier)
+    collectionView.showsHorizontalScrollIndicator = false
+    collectionView.alwaysBounceHorizontal = true
+    collectionView.backgroundColor = .systemGroupedBackground
+    collectionView.dataSource = self
+    collectionView.delegate = self
+    return collectionView
+  }()
+
   // MARK: - Initializers
   init(userStories: [UserStory]) {
     self.userStories = userStories
@@ -52,6 +84,16 @@ final class MiniStoryView: UIView {
   
   // MARK: - Layouts
   private func setupCollectionView() {
+    self.addSubview(self.collectionView)
+    self.collectionView.fillSuperview()
+  }
+
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    let height = self.collectionView.frame.height - verticalInset * 2
+    let width = height
+    let itemSize = CGSize(width: width, height: height)
+    self.flowLayout.itemSize = itemSize
   }
 }
 
@@ -65,9 +107,9 @@ extension MiniStoryView: UICollectionViewDataSource {
   // 2
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = collectionView .dequeueReusableCell(
-      withReuseIdentifier: cellIdentifier,
-      for: indexPath) as? MiniStoryCollectionViewCell
-      else { fatalError("Dequeued Unregistered Cell") }
+            withReuseIdentifier: cellIdentifier,
+            for: indexPath) as? MiniStoryCollectionViewCell
+    else { fatalError("Dequeued Unregistered Cell") }
     let username = userStories[indexPath.item].username
     cell.configureCell(imageName: username.rawValue)
     return cell

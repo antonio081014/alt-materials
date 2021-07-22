@@ -83,6 +83,12 @@ final class HeaderCollectionReusableView: UICollectionReusableView {
   
   // MARK: - Layouts
   private func setupStackView() {
+    self.addSubview(self.stackView)
+    self.stackView.fillSuperview()
+
+    NSLayoutConstraint.activate([
+      self.topSpacerView.heightAnchor.constraint(equalTo: self.bottomSpacerView.heightAnchor)
+    ])
   }
   
   // MARK: - User Interface
