@@ -47,6 +47,7 @@ class MessagesTableViewController: UITableViewController {
       LeftMessageBubbleTableViewCell.self,
       forCellReuseIdentifier: MessageBubbleCellType.leftText.rawValue)
     tableView.separatorStyle = .none
+    tableView.rowHeight = UITableView.automaticDimension
   }
   
   // MARK: - Table view data source
@@ -70,7 +71,7 @@ class MessagesTableViewController: UITableViewController {
         for: indexPath) as! LeftMessageBubbleTableViewCell
     }
     
-    cell.textLabel?.text = message.text
+    cell.messageLabel.text = message.text
     
     return cell
   }

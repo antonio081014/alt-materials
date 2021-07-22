@@ -67,7 +67,7 @@ class MessageBubbleTableViewCell: UITableViewCell {
   }
   
   func configureLayout() {
-    /*
+
     contentView.addSubview(messageLabel)
     
     NSLayoutConstraint.activate([
@@ -88,7 +88,7 @@ class MessageBubbleTableViewCell: UITableViewCell {
         equalTo: contentView.leftAnchor,
         constant: 10)
     ])
-     */
+     
   }
   
   required init?(coder aDecoder: NSCoder) {
